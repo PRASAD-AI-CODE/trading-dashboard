@@ -1,82 +1,98 @@
-# TradeJournal
+# Trading Journal 📊
 
-A full-stack personal trading journal built with React, Vite, Tailwind-style CSS, Recharts and Supabase.
+A modern web application for recording, organizing, and analyzing trading activity. Trading Journal provides a dashboard for tracking profit and loss, reviewing trade history, exploring analytics, and maintaining a trading journal.
 
-## Features
+## 🚀 Live Demo
 
-- Email/password authentication through Supabase Auth
-- Dashboard with date ranges and KPI cards
-- Add, edit, view and delete trades
-- BUY/SELL P&L calculations for closed and open trades
-- Options/equity/futures/crypto/forex fields
-- Trade screenshot upload through Supabase Storage
-- Psychology notes attached to trades
-- Daily journal
-- Strategy library
-- Analytics and equity curve
-- User-specific Row Level Security
-- Responsive layout for desktop and mobile
+**[Open Trading Journal](https://trading-dashboard-six-pi.vercel.app)**
 
-## 1. Requirements
+## ✨ Features
 
-Install Node.js LTS. In VS Code, open this folder in the terminal.
+- **Dashboard:** View key trading performance metrics.
+- **Trade Management:** Record and manage trade details.
+- **Profit & Loss Tracking:** Review trading results.
+- **Trading Calendar:** Organize trades by date.
+- **Analytics:** Explore performance data and trends.
+- **Trading Journal:** Maintain notes and reflections.
+- **Psychology Tracking:** Record observations about trading behavior.
+- **Strategy Management:** Organize trading strategies.
+- **Authentication:** User sign-in and account management.
+- **Responsive Interface:** A modern dark-themed dashboard.
 
-```bash
-npm install
-```
+## 🛠️ Tech Stack
 
-## 2. Supabase
+- React.js
+- Vite
+- Supabase
+- JavaScript
+- CSS
+- Git and GitHub
+- Vercel
 
-1. Create a Supabase project.
-2. Open SQL Editor.
-3. Copy everything from `supabase/schema.sql` and run it.
-4. Open Project Settings -> API.
-5. Copy the Project URL and anon/publishable key.
+## 💻 Run Locally
 
-## 3. Environment
+### Prerequisites
 
-Copy `.env.example` to `.env.local` and fill:
+- Node.js and npm
+- A Supabase project with the required database and authentication configuration
 
-```text
-VITE_SUPABASE_URL=...
-VITE_SUPABASE_ANON_KEY=...
-```
+### Installation
 
-Restart Vite after changing `.env.local`.
+1. Clone the repository:
 
-## 4. Run in VS Code
+   ```bash
+   git clone https://github.com/PRASAD-AI-CODE/trading-dashboard.git
+   ```
 
-```bash
-npm run dev
-```
+2. Enter the project directory:
 
-Open the local URL printed by Vite, normally `http://localhost:5173`.
+   ```bash
+   cd trading-dashboard
+   ```
 
-## 5. Authentication
+3. Install dependencies:
 
-Create an account from the app. If email confirmation is enabled in Supabase, confirm the email before logging in.
+   ```bash
+   npm install
+   ```
 
-## Notes
+4. Create a `.env.local` file in the project root and add the environment variables expected by the application:
 
-The first version intentionally calculates prices from data entered into the journal. It does not claim to provide live market prices. Live broker/market-data integration can be added later.
+   ```env
+   VITE_SUPABASE_URL=your_supabase_project_url
+   VITE_SUPABASE_ANON_KEY=your_supabase_publishable_or_anon_key
+   ```
 
+   Use the exact variable names expected by the source code. Never commit `.env.local` or private service-role keys.
 
-### Existing Supabase project: update for options fields
-If you already ran the original `schema.sql`, open Supabase SQL Editor and run `supabase/update_options_fields.sql` once. This adds the `option_type` and `strike_price` columns without deleting existing trades. The Add Trade form no longer asks for entry/exit times. For Options, enter Instrument, BUY/SELL Direction, Strike price and CE/PE; the symbol is composed automatically (for example `NIFTY 25000 CE`). The Entry price is the option premium, not the strike price.
+5. Start the development server:
 
+   ```bash
+   npm run dev
+   ```
 
-## Lot-based quantities update
+6. To create a production build:
 
-For lot-based tracking, run `supabase/update_lot_size_fields.sql` in the existing Supabase SQL Editor. The app stores total contract units in `quantity` for P&L math, and stores the entered number of lots and units per lot in `lots` and `lot_size`. Preset lot sizes are convenience defaults only; verify them against the applicable exchange contract information and edit the units-per-lot field if needed. Unrealised P&L is recalculated from trade side, entry price, current price, and total units whenever displayed.
+   ```bash
+   npm run build
+   ```
 
+## 🌐 Deployment
 
-### Market classification and quantity rules
-- Options and Futures use **Lots** × **Units per lot** to calculate total contract units.
-- Equity, Crypto, Forex, and Other use a direct **Quantity (units)** field; lot inputs are hidden.
-- The Trades page includes a market filter for Equity, Options, Futures, and Other.
-- For an open trade, enter a positive **Current price**; unrealised P&L is recalculated as `(current price - entry price) × quantity` for BUY, or `(entry price - current price) × quantity` for SELL. Charges are applied to realised P&L.
-- The app does not receive live market prices automatically; current price must be entered/updated manually.
+The application is deployed using Vercel. Configure the required environment variables in the Vercel project settings before deploying.
 
-### P&L Details and product classification
+## 🔒 Security
 
-The dashboard's Unrealised P&L card opens the P&L Details view. It includes date-range controls, segment/product filters, monthly realised P&L summaries, open-position unrealised P&L, and CSV statement export. Run `supabase/update_pnl_details.sql` once in the existing Supabase SQL Editor to add the `product_type` field used by Intraday, Delivery, and MTF filters. Keep your existing `.env.local` file when replacing project files.
+- Keep local environment files private.
+- Never expose Supabase service-role or other secret keys.
+- Configure authentication redirect URLs for your deployed domain.
+
+## 👨‍💻 Author
+
+**Prasad Bobade**
+
+GitHub: [PRASAD-AI-CODE](https://github.com/PRASAD-AI-CODE)
+
+## 📄 Note
+
+This project is intended for trade recordkeeping, journaling, and performance analysis. It does not guarantee trading results or provide financial advice.
